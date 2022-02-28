@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'nick_name'
     ];
 
     /**
@@ -36,4 +36,35 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function checkTodayProgress($today)
+    {
+        return $this::select('users.nick_name', 'points.id as exist_id')
+                ->leftjoin('points', function($join) use ($today) {
+                    $join->on('users.id', '=', 'points.user_id')
+                        ->where('points.as_on_date', $today);
+                })->get();   
+    }
+
+    public function getAllUserBasedOnOrder()
+    {
+        return $this::select('users.*', 'progress_orders.order')
+                ->leftjoin('progress_orders', function($join) {
+                    $join->on('users.id', '=', 'progress_orders.user_id');
+                })->orderBy('progress_orders.order', 'asc')->get();
+    }
+
+    public function getAllProgress($today)
+    {
+        return $this::select('users.nick_name', 'points.points', 'points.as_on_date')
+                ->leftjoin('points', function($join) use ($today) {
+                    $join->on('users.id', '=', 'points.user_id')
+                        ->where('points.as_on_date', $today);
+                })
+                ->leftjoin('progress_orders', function($join) {
+                    $join->on('users.id', '=', 'progress_orders.user_id');
+                })
+                ->orderBy('progress_orders.order', 'asc')
+                ->get();
+    }
 }

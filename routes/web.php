@@ -14,19 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+Route::get('/collect/points', 'PointsController@index')->name('get_points')->middleware('auth');
+Route::post('/collect/points', 'PointsController@updatePoints')->name('update_points')->middleware('auth');
 
-Route::get('/test', function(){
-    return view('test');
-})->name('home');
+Route::get('/progress', 'PointsController@viewProgress')->name('view_progress');
 
-Route::get('/login1', function(){
-    return view('login');
-})->name('home');
+
+Route::get('/dashboard', 'AdminController@viewDashBoad')->name('view_dash')->middleware('auth');
+Route::get('/configure', 'AdminController@viewConfigure')->name('view_config')->middleware('auth');
+Route::post('/configure', 'AdminController@saveConfigure')->name('save_config')->middleware('auth');
+
