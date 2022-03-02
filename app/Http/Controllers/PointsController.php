@@ -66,10 +66,46 @@ class PointsController extends Controller
     public function viewProgress()
     {
         $today = date('Y-m-d');
+        $dateIssue = false;
+
+        if(isset($_GET['date'])) {
+            $dateIssue = true;
+            $checkValidDate = $this->isValidDate($_GET['date']);
+            if($checkValidDate){
+                $dateIssue = false;
+                $today = $_GET['date'];
+            }
+        }
 
         $progress = (new User())->getAllProgress($today);
         $st = (new SupportTickets())->getMyPointOrSupport(['support_or_point' => 1, 'as_on_date' => $today]);
 
-        return view('progress')->with(['progress' => $progress, 'st' => $st]);
+        $dates = [
+            'progress' => $today,
+            'today' => date('Y-m-d'),
+            'prev' => date('Y-m-d', strtotime($today.' -1 day')),
+            'next' => date('Y-m-d', strtotime($today.' +1 day')),
+        ];
+
+        return view('progress')->with(['progress' => $progress, 'st' => $st, 'dates' => $dates]);
+    }
+
+    public function isValidDate($date, $format= 'Y-m-d'){
+        return $date == date($format, strtotime($date));
+    }
+
+    public function viewHistory()
+    {
+        $data = [
+            'user_id' => Auth::user()->id,
+            'as_on_date' => [
+                date('Y-m-d', strtotime('-10 days')),
+                date('Y-m-d'),
+            ]
+        ];
+
+        $history = (new Points())->getPointsHistory($data);
+
+        return $history;
     }
 }

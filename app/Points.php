@@ -22,4 +22,11 @@ class Points extends Model
 
     	return $progress;
     }
+
+    public function getPointsHistory($data)
+    {
+        return $this::where('user_id', $data['user_id'])
+                        ->whereBetween('as_on_date', $data['as_on_date'])
+                        ->get();
+    }
 }

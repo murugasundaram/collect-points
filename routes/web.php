@@ -19,10 +19,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/register', function(){
+	return 'Sorry for the trouble, You are not allowed to register. Get the Login information from the admin. Please contact Admin.';
+})->name('register');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/collect/points', 'PointsController@index')->name('get_points')->middleware('auth');
 Route::post('/collect/points', 'PointsController@updatePoints')->name('update_points')->middleware('auth');
+Route::get('/progress/history', 'PointsController@viewHistory')->name('view_history');
+
 
 Route::get('/progress', 'PointsController@viewProgress')->name('view_progress');
 
