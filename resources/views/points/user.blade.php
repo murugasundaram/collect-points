@@ -29,7 +29,7 @@
 
   	<div class="w-75 mb-3">
   		<a class="ml-3 btn btn-primary" target="_blank" href="{{ route('view_progress') }}">Today's Progress</a>
-  		<a class="ml-3 btn btn-dark" target="_blank" href="{{ route('view_history') }}">My History</a>
+  		<a class="ml-3 btn btn-dark" href="{{ route('view_history') }}">My History<span class="badge bg-success ml-1">New</span></a>
   		
   	</div>
   	

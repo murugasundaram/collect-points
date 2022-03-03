@@ -49,17 +49,6 @@ class PointsController extends Controller
             $update = (new SupportTickets())->doFirstOrNew($data);
         }
 
-        // check support tkt or points
-        if(isset($request->lastMinPoints)) {
-            $data = [
-                'support_or_point' => 2, // 2 means last min points
-                'points' => $request->lastMinPoints,
-                'as_on_date' => date('Y-m-d')
-            ];
-
-            $update = (new SupportTickets())->doFirstOrNew($data);
-        }
-
     	return redirect()->back()->withSuccess('Your Progress has been submitted successfully!');
     }
 
@@ -106,6 +95,6 @@ class PointsController extends Controller
 
         $history = (new Points())->getPointsHistory($data);
 
-        return $history;
+        return view('history')->with(['history' => $history]);
     }
 }

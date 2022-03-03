@@ -27,6 +27,7 @@ class Points extends Model
     {
         return $this::where('user_id', $data['user_id'])
                         ->whereBetween('as_on_date', $data['as_on_date'])
+                        ->orderBy('as_on_date', 'desc')
                         ->get();
     }
 }
