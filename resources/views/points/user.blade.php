@@ -5,8 +5,10 @@
 <link rel="stylesheet" type="text/css" href="{{ url('css/jquery-te-1.4.0.css') }}">
 <script>
   $(function() {
-    $("textarea").jqte();
+    $(".cp-points-area").jqte();
+    $(".cp-support-area").jqte({placeholder: "leave this as blank, if there is no support tickets received today"});
     $('.jqte_toolbar').addClass('d-none');
+
   });
 </script>
 @endsection
@@ -47,11 +49,11 @@
 
 	    <form id="progress-form" method="POST" action="{{ route('update_points') }}">
 	    	@csrf
-	    	<textarea class="form-control" rows="10" name="progress">{{ $points }}</textarea>
+	    	<textarea class="form-control cp-points-area" rows="10" name="progress">{{ $points }}</textarea>
 	    	@if(Auth::user()->is_support_admin)
 	    	<div>
 	    		<h5>Support Tickets</h5>
-	    		<textarea class="form-control" rows="10" name="supportTkt">{{ $st }}</textarea>
+	    		<textarea class="cp-support-area" rows="10" name="supportTkt">{{ $st }}</textarea>
 	    	</div>
 	    	@endif
 	    	

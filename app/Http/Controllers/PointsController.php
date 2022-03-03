@@ -27,12 +27,14 @@ class PointsController extends Controller
 
     public function updatePoints(Request $request)
     {
+        $today = date('Y-m-d');
+
         if(isset($request->progress)) {
             $data = [
         		'user_id' => Auth::user()->id,
         		'nick_name' => Auth::user()->nick_name,
         		'points' => $request->progress,
-        		'as_on_date' => date('Y-m-d')
+        		'as_on_date' => $today
         	];
 
         	$update = (new Points())->doFirstOrNew($data);
@@ -43,10 +45,12 @@ class PointsController extends Controller
             $data = [
                 'support_or_point' => 1, // 1 means support tkt
                 'points' => $request->supportTkt,
-                'as_on_date' => date('Y-m-d')
+                'as_on_date' => $today
             ];
 
             $update = (new SupportTickets())->doFirstOrNew($data);
+        } else {
+            (new SupportTickets())->deleteIfExist($today);
         }
 
     	return redirect()->back()->withSuccess('Your Progress has been submitted successfully!');

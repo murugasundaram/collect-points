@@ -21,4 +21,9 @@ class SupportTickets extends Model
 
     	return $progress;
     }
+
+    public function deleteIfExist($date)
+    {
+        return $this::where('as_on_date', $date)->delete();
+    }
 }
