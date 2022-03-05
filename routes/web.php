@@ -23,17 +23,19 @@ Route::get('/register', function(){
 	return 'Sorry for the trouble, You are not allowed to register. Get the Login information from the admin. Please contact Admin.';
 })->name('register');
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/collect/points', 'PointsController@index')->name('get_points')->middleware('auth');
-Route::post('/collect/points', 'PointsController@updatePoints')->name('update_points')->middleware('auth');
-Route::get('/progress/history', 'PointsController@viewHistory')->name('view_history');
-
-
+// anyone can access this route
 Route::get('/progress', 'PointsController@viewProgress')->name('view_progress');
 
+// only user can access these routes
+Route::group(['middleware' => ['auth']], function () {
+	Route::get('/collect/points', 'PointsController@index')->name('get_points');
+	Route::post('/collect/points', 'PointsController@updatePoints')->name('update_points');
+	Route::get('/progress/history', 'PointsController@viewHistory')->name('view_history');
+});
 
-Route::get('/dashboard', 'AdminController@viewDashBoad')->name('view_dash')->middleware('auth');
-Route::get('/configure', 'AdminController@viewConfigure')->name('view_config')->middleware('auth');
-Route::post('/configure', 'AdminController@saveConfigure')->name('save_config')->middleware('auth');
-
+// only admin can access these routes
+Route::group(['middleware' => ['auth', 'onlyAdmin']], function () {
+	Route::get('/dashboard', 'AdminController@viewDashBoad')->name('view_dash');
+	Route::get('/configure', 'AdminController@viewConfigure')->name('view_config');
+	Route::post('/configure', 'AdminController@saveConfigure')->name('save_config');
+});
