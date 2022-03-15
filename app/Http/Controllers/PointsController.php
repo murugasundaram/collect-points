@@ -10,6 +10,10 @@ use AUth;
 
 class PointsController extends Controller
 {
+    protected $daysOfWeek = [
+        'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+    ];
+
     public function index()
     {
         $today = date('Y-m-d');
@@ -41,16 +45,18 @@ class PointsController extends Controller
         }
 
         // check support tkt or points
-        if(isset($request->supportTkt)) {
-            $data = [
-                'support_or_point' => 1, // 1 means support tkt
-                'points' => $request->supportTkt,
-                'as_on_date' => $today
-            ];
+        if(Auth::user()->is_support_admin) {
+            if(isset($request->supportTkt)) {
+                $data = [
+                    'support_or_point' => 1, // 1 means support tkt
+                    'points' => $request->supportTkt,
+                    'as_on_date' => $today
+                ];
 
-            $update = (new SupportTickets())->doFirstOrNew($data);
-        } else {
-            (new SupportTickets())->deleteIfExist($today);
+                $update = (new SupportTickets())->doFirstOrNew($data);
+            } else {
+                (new SupportTickets())->deleteIfExist($today);
+            }
         }
 
     	return redirect()->back()->withSuccess('Your Progress has been submitted successfully!');
@@ -72,12 +78,15 @@ class PointsController extends Controller
 
         $progress = (new User())->getAllProgress($today);
         $st = (new SupportTickets())->getMyPointOrSupport(['support_or_point' => 1, 'as_on_date' => $today]);
+        $day = date('w', strtotime($today));
 
         $dates = [
             'progress' => $today,
             'today' => date('Y-m-d'),
             'prev' => date('Y-m-d', strtotime($today.' -1 day')),
             'next' => date('Y-m-d', strtotime($today.' +1 day')),
+            'day' => $this->daysOfWeek[$day],
+            'isHoliday' => ($day == 6 || $day == 0) ? true : false
         ];
 
         return view('progress')->with(['progress' => $progress, 'st' => $st, 'dates' => $dates]);
