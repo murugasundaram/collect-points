@@ -5,6 +5,11 @@
 	p {
 		margin-bottom: 1px;
 	}
+
+	.userName {
+		font-weight: bold;
+		color: #ff8a00;
+	}
 </style>
 @endsection
 
@@ -41,8 +46,8 @@
 	  			</div>
 	  			@foreach($progress as $pro)
 	  			<div>
-	  				<div class="ml-4" style="color: #0007ff">
-		  				<strong>({{$pro->nick_name}})</strong>
+	  				<div class="ml-4 userName">
+		  				({{$pro->nick_name}})
 		  			</div>
 		  			<div class="ml-4 mb-3">
 		  				{!! $pro->points ? $pro->points : 'Leave' !!}
