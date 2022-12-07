@@ -8,6 +8,10 @@
 
 	.userName {
 		font-weight: bold;
+		color: #2780e3;
+	}
+
+	.noSupportTkt {
 		color: #ff8a00;
 	}
 </style>
@@ -38,7 +42,7 @@
 		  				{!! $st !!}
 		  			</div>
 		  			@else
-		  			<div class="ml-4">
+		  			<div class="ml-4 noSupportTkt">
 		  				<strong>There is no Support Tickets today</strong>
 		  			</div>
 		  			@endif

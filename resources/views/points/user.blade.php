@@ -11,6 +11,12 @@
 
   });
 </script>
+<style type="text/css">
+	.userName {
+		font-weight: bold;
+		color: #ff8a00;
+	}
+</style>
 @endsection
 
 @section('content')
@@ -38,7 +44,7 @@
   	
   	<div class="card w-75 mb-3">
 	  <div class="card-body">
-	    <h2 class="card-title"> Hello, {{ Auth::user()->name }}!! 
+	    <h2 class="card-title"> Hello, <span class="userName">{{ Auth::user()->name }}</span> <span> 😀 </span> 
 	    	<a class="mr-3 btn btn-danger rounded-pill float-right" href="{{ route('logout') }}" 
 	    	onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
 	    	<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
