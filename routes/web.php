@@ -38,4 +38,5 @@ Route::group(['middleware' => ['auth', 'onlyAdmin']], function () {
 	Route::get('/dashboard', 'AdminController@viewDashBoad')->name('view_dash');
 	Route::get('/configure', 'AdminController@viewConfigure')->name('view_config');
 	Route::post('/configure', 'AdminController@saveConfigure')->name('save_config');
+	Route::get('/users', 'UserController@index')->name('view_user');
 });
