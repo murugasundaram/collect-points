@@ -1,5 +1,5 @@
 <div class="c-sidebar-brand">
-Genie
+Collect Points
 </div>
 <ul class="c-sidebar-nav">
 	<li class="c-sidebar-nav-item">
@@ -18,6 +18,12 @@ Genie
 	<a class="c-sidebar-nav-link" href="{{ route('view_user') }}">
 	<i class="cil-user c-sidebar-nav-icon"></i>
 		Users
+	</a>
+	</li>
+	<li class="c-sidebar-nav-item">
+	<a class="c-sidebar-nav-link" href="{{ route('view_pass_manage') }}">
+	<i class="cil-fingerprint c-sidebar-nav-icon"></i>
+		Password Management
 	</a>
 	</li>
 	<li class="c-sidebar-nav-item">

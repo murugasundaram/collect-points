@@ -39,4 +39,7 @@ Route::group(['middleware' => ['auth', 'onlyAdmin']], function () {
 	Route::get('/configure', 'AdminController@viewConfigure')->name('view_config');
 	Route::post('/configure', 'AdminController@saveConfigure')->name('save_config');
 	Route::get('/users', 'UserController@index')->name('view_user');
+	Route::get('/managePass', 'UserController@managePassword')->name('view_pass_manage');
+	Route::post('/save/managePass', 'UserController@saveManagePassword')->name('save_password_config');
+	
 });

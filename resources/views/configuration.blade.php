@@ -21,14 +21,14 @@
 	<ul class="list-group w-50 sortable user-sort-list" id="sortable">
 		@foreach($allUser as $user)
 		  <li style="cursor: move;" class="list-group-item ui-state-default" data-user="{{ $user->id }}"> 
-		  	<i class="icon icon-2xl mt-5 mb-2 cil-menu"></i> 
+		  	<i class="icon icon-2xl mt-1 mb-1 cil-menu"></i> 
 		  	<span class="pl-2"> {{ $user->nick_name }} </span>
 		  </li>
 		@endforeach
 	</ul>
 </div>
 <div class="row mt-3">
-	<button class="btn btn-success" onclick="saveTheOrder()">Save</button>
+	<button class="btn btn-success" style="width: 10rem" onclick="saveTheOrder()">Save</button>
 </div>
 </div>
 @endsection

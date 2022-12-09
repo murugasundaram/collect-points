@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function checkTodayProgress($today)
     {
-        return $this::select('users.nick_name', 'points.id as exist_id')
+        return $this::where('users.deleted', 0)->select('users.nick_name', 'points.id as exist_id')
                 ->leftjoin('points', function($join) use ($today) {
                     $join->on('users.id', '=', 'points.user_id')
                         ->where('points.as_on_date', $today);
@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function getAllUserBasedOnOrder()
     {
-        return $this::select('users.*', 'progress_orders.order')
+        return $this::where('users.deleted', 0)->select('users.*', 'progress_orders.order')
                 ->leftjoin('progress_orders', function($join) {
                     $join->on('users.id', '=', 'progress_orders.user_id');
                 })->orderBy('progress_orders.order', 'asc')->get();
@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function getAllProgress($today)
     {
-        return $this::select('users.nick_name', 'points.points', 'points.as_on_date')
+        return $this::where('users.deleted', 0)->select('users.nick_name', 'points.points', 'points.as_on_date')
                 ->leftjoin('points', function($join) use ($today) {
                     $join->on('users.id', '=', 'points.user_id')
                         ->where('points.as_on_date', $today);
@@ -66,5 +66,10 @@ class User extends Authenticatable
                 })
                 ->orderBy('progress_orders.order', 'asc')
                 ->get();
+    }
+
+    public function getAllUsers()
+    {
+        return $this::where('deleted', 0)->get();
     }
 }
