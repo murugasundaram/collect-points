@@ -39,6 +39,23 @@ class UserController extends Controller
         return view('projects', ['projects' => $allProj]);
     }
 
+    public function showMapProjects()
+    {
+        View::share('thispagename', 'Map The Projects');
+
+        $allProj = Projects::all();
+        $allUserCount = User::all()->count();
+
+        return view('map_projects', ['projects' => $allProj, 'allUserCount' => $allUserCount]);
+    }
+
+    public function showMapIdProjects($id)
+    {
+        View::share('thispagename', 'Map The Projects');
+
+        pmode($id);
+    }
+
     public function saveManagePassword(Request $request)
     {
     	$data = $request->all();

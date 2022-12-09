@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth', 'onlyAdmin']], function () {
 	Route::get('/users', 'UserController@index')->name('view_user');
 	Route::get('/managePass', 'UserController@managePassword')->name('view_pass_manage');
 	Route::get('/projects', 'UserController@showProjects')->name('view_projects');
+	Route::get('/mapProjects', 'UserController@showMapProjects')->name('view_map_projects');
+	Route::get('/mapProjects/{id}', 'UserController@showMapIdProjects')->name('view_map_id_projects');
 
 	Route::post('/save/managePass', 'UserController@saveManagePassword')->name('save_password_config');
 	Route::post('/save/userInfo', 'UserController@saveUserInfo')->name('save_user_info');

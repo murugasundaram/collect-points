@@ -33,6 +33,12 @@ Collect Points
 	</a>
 	</li>
 	<li class="c-sidebar-nav-item">
+	<a class="c-sidebar-nav-link" href="{{ route('view_map_projects') }}">
+	<i class="cil-sitemap c-sidebar-nav-icon"></i>
+		Mapping Projects
+	</a>
+	</li>
+	<li class="c-sidebar-nav-item">
 	<a class="c-sidebar-nav-link" target="_blank" href="{{ route('view_progress') }}">
 	<i class="cil-drop c-sidebar-nav-icon"></i>
 		Today's Progress
