@@ -27,7 +27,7 @@ Collect Points
 	</a>
 	</li>
 	<li class="c-sidebar-nav-item">
-	<a class="c-sidebar-nav-link" href="{{ route('view_config') }}">
+	<a class="c-sidebar-nav-link" href="{{ route('view_projects') }}">
 	<i class="cil-list-rich c-sidebar-nav-icon"></i>
 		Projects
 	</a>
