@@ -11,25 +11,15 @@ use Mail;
 
 class UserController extends Controller
 {
-    /**
-    * This function used to 
-    *
-    * @author Muruga
-    * @date 
-    */
     public function index()
     {
     	View::share('thispagename', 'Users');
 
-    	return view('users');
+        $allUser = User::all();
+
+    	return view('users', ['users' => $allUser]);
     }
 
-    /**
-    * This function used to 
-    *
-    * @author Muruga
-    * @date 
-    */
     public function managePassword()
     {
     	View::share('thispagename', 'Manage Password');
@@ -39,12 +29,6 @@ class UserController extends Controller
     	return view('passwordManage', ['users' => $allUser]);
     }
 
-    /**
-    * This function used to 
-    *
-    * @author Muruga
-    * @date 
-    */
     public function saveManagePassword(Request $request)
     {
     	$data = $request->all();
@@ -66,5 +50,22 @@ class UserController extends Controller
     		'error' => false,
     		'msg' => 'Password has been updated for the <strong>'.$user->nick_name.'</strong>.'
     	];
+    }
+
+    public function saveUserInfo(Request $request)
+    {
+        $data = $request->all();
+
+        $user = [];
+
+        if($data['type'] == 'update') {
+            $user = User::where('id', $data['id'])->update(['name' => $data['name'], 'nick_name' => $data['nick_name'], 'email' => $data['email']]);
+        } elseif($data['type'] == 'create') { 
+            $user = User::create(['name' => $data['name'], 'password' => Hash::make($data['nick_name']), 'nick_name' => $data['nick_name'], 'email' => $data['email']]);
+        } elseif($data['type'] == 'delete') { 
+            $user = User::where('id', $data['id'])->update(['deleted' => $data['value']]);
+        }
+
+        return $user;
     }
 }
